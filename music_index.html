@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head><meta charset="UTF-8"><title>இசைக்கருவிகள்</title></head>
+<body>
+<h1>🎶 இசைக்கருவிகள் 🎶</h1>
+<select id="instrumentSelect"></select>
+<button onclick="showDetails()">தகவல் காட்டு</button>
+<div id="output"></div>
+
+<script>
+let instruments = {};
+fetch("instruments_full.json")
+.then(r=>r.json())
+.then(d=>{
+ instruments=d;
+ const s=document.getElementById("instrumentSelect");
+ s.innerHTML="<option value=''>-- தேர்வு --</option>";
+ for(let k in instruments){
+  const o=document.createElement("option");
+  o.value=k;o.textContent=k;s.appendChild(o);
+ }
+});
+
+function showDetails(){
+ const n=document.getElementById("instrumentSelect").value;
+ if(!n) return;
+ const d=instruments[n];
+ document.getElementById("output").innerHTML=
+  "<h2>"+n+"</h2><p>"+d.description+"</p>";
+}
+</script>
+</body>
+</html>
